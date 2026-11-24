@@ -1,0 +1,2595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>habiba elsayed | Graphic Designer & Video Editor</title>
+  <style>
+    :root {
+      --bg-dark: #070a11;
+      --navy-deep: #0b1222;
+      --navy-panel: #101a30;
+      --card-bg: rgba(18, 26, 44, 0.78);
+      --text-main: #ffffff;
+      --text-muted: #9aa6bf;
+      --border-subtle: rgba(255, 255, 255, 0.12);
+      --accent-blue: #31a8ff;
+      --accent-pink: #ea77ff;
+      --accent-orange: #ff9a00;
+      --settle-duration: 0.9s;
+
+      /* Creative Mind Accents on Dark Navy */
+      --primary: #F04432;
+      --dark: #070a11;
+      --paper: #F2EDE5;
+      --accent: #D8FF3E;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at 50% 25%, #162138 0%, var(--bg-dark) 75%);
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Continuous Ambient Geometric Background */
+    #geoCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .site-wrapper {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Navbar */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 44px;
+      border-bottom: 1px solid var(--border-subtle);
+      background: rgba(7, 10, 17, 0.85);
+      backdrop-filter: blur(14px);
+    }
+
+    .brand-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 15.5px;
+      color: var(--text-main);
+      text-decoration: none;
+    }
+
+    .brand-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-orange), var(--accent-pink));
+      box-shadow: 0 0 12px rgba(49, 168, 255, 0.65);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      list-style: none;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .nav-links a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-main);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-ghost,
+    .btn-primary {
+      border-radius: 999px;
+      padding: 9px 18px;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border-subtle);
+      text-decoration: none;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-main);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.16);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: #ffffff;
+      color: #070a11;
+      border-color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background: #e7eefc;
+      transform: translateY(-1px);
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      min-height: calc(100vh - 70px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 24px;
+      overflow: hidden;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 15;
+      text-align: center;
+      max-width: 760px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 12.5px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #8ccbff;
+      background: rgba(49, 168, 255, 0.12);
+      border: 1px solid rgba(49, 168, 255, 0.28);
+      margin-bottom: 18px;
+    }
+
+    /* Interactive Hero Name */
+    .hero-name-wrap {
+      position: relative;
+      display: inline-block;
+      perspective: 900px;
+      padding: 10px 20px;
+      margin-bottom: 14px;
+      cursor: default;
+    }
+
+    .hero-aura {
+      position: absolute;
+      inset: -14px -24px;
+      border-radius: 28px;
+      background: radial-gradient(
+        circle at var(--mx, 50%) var(--my, 50%),
+        rgba(49, 168, 255, 0.24),
+        rgba(234, 119, 255, 0.14) 38%,
+        transparent 72%
+      );
+      opacity: 0;
+      filter: blur(18px);
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+
+    .hero-name-wrap.is-active .hero-aura {
+      opacity: 1;
+    }
+
+    .hero-title {
+      position: relative;
+      z-index: 2;
+      font-size: clamp(2.6rem, 6vw, 4.7rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.06;
+      color: #ffffff;
+      text-shadow: 0 10px 34px rgba(0, 0, 0, 0.7);
+      transform:
+        rotateX(var(--rx, 0deg))
+        rotateY(var(--ry, 0deg))
+        translateY(var(--lift, 0px));
+      transition: transform 0.2s cubic-bezier(0.2, 0.85, 0.3, 1.15), text-shadow 0.25s ease;
+      will-change: transform;
+    }
+
+    .hero-title-shine {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+      font-size: clamp(2.6rem, 6vw, 4.7rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.06;
+      padding: 10px 20px;
+      background: radial-gradient(
+        170px circle at var(--mx, 50%) var(--my, 50%),
+        #8ccbff 0%,
+        #f3a8ff 35%,
+        #ffca28 62%,
+        transparent 82%
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      opacity: 0;
+      transform:
+        rotateX(var(--rx, 0deg))
+        rotateY(var(--ry, 0deg))
+        translateY(var(--lift, 0px));
+      transition: opacity 0.25s ease, transform 0.2s cubic-bezier(0.2, 0.85, 0.3, 1.15);
+      will-change: transform, opacity;
+    }
+
+    .hero-name-wrap.is-active .hero-title-shine {
+      opacity: 0.95;
+    }
+
+    .hero-name-wrap.is-active .hero-title {
+      text-shadow:
+        0 0 28px rgba(49, 168, 255, 0.35),
+        0 12px 34px rgba(0, 0, 0, 0.75);
+    }
+
+    .hero-spark {
+      position: fixed;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 30;
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.4);
+      animation: heroSparkPop 0.65s cubic-bezier(0.2, 0.85, 0.3, 1) forwards;
+    }
+
+    @keyframes heroSparkPop {
+      0% {
+        opacity: 0.95;
+        transform: translate(-50%, -50%) scale(0.5);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(calc(-50% + var(--dx, 0px)), calc(-50% + var(--dy, -22px))) scale(1.25);
+      }
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.18rem);
+      color: var(--text-muted);
+      max-width: 560px;
+      margin: 0 auto 28px;
+      line-height: 1.6;
+    }
+
+    .hero-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .hero-cta-main {
+      padding: 13px 28px;
+      border-radius: 999px;
+      background: #ffffff;
+      color: #070a11;
+      font-size: 14.5px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .hero-cta-main:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 26px rgba(255, 255, 255, 0.2);
+    }
+
+    .hero-cta-secondary {
+      padding: 13px 26px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      color: #ffffff;
+      font-size: 14.5px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .hero-cta-secondary:hover {
+      background: rgba(255, 255, 255, 0.18);
+      transform: translateY(-2px);
+    }
+
+    /* Software Icons Stage */
+    .icons-stage {
+      position: absolute;
+      inset: 0;
+      z-index: 8;
+      pointer-events: none;
+    }
+
+    .app-tile {
+      --rot: 0deg;
+      position: absolute;
+      width: 110px;
+      height: 110px;
+      border-radius: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: var(--tile-bg);
+      border: 2px solid var(--tile-border);
+      box-shadow:
+        0 20px 42px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      opacity: 0;
+      transform: translateY(34px) scale(0.82) rotate(calc(var(--rot) - 8deg));
+      transition:
+        opacity var(--settle-duration) cubic-bezier(0.2, 0.88, 0.32, 1.1),
+        transform var(--settle-duration) cubic-bezier(0.2, 0.88, 0.32, 1.1);
+    }
+
+    .app-tile.is-visible {
+      opacity: 1;
+      transform: translateY(0) scale(1) rotate(var(--rot));
+    }
+
+    .app-code {
+      font-size: 1.95rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+
+    .app-name {
+      font-size: 10.5px;
+      font-weight: 600;
+      opacity: 0.92;
+      text-align: center;
+      padding: 0 6px;
+    }
+
+    .tile-ps {
+      top: 15%;
+      left: 12%;
+      --rot: -13deg;
+      --tile-bg: linear-gradient(145deg, #001e36 0%, #083259 100%);
+      --tile-border: #31a8ff;
+      color: #31a8ff;
+    }
+
+    .tile-ai {
+      top: 18%;
+      right: 13%;
+      --rot: 11deg;
+      --tile-bg: linear-gradient(145deg, #330000 0%, #5e1f00 100%);
+      --tile-border: #ff9a00;
+      color: #ff9a00;
+    }
+
+    .tile-ae {
+      bottom: 16%;
+      left: 16%;
+      --rot: 9deg;
+      --tile-bg: linear-gradient(145deg, #00005b 0%, #22167a 100%);
+      --tile-border: #9999ff;
+      color: #9999ff;
+    }
+
+    .tile-pr {
+      bottom: 18%;
+      right: 15%;
+      --rot: -10deg;
+      --tile-bg: linear-gradient(145deg, #2a0038 0%, #560e6e 100%);
+      --tile-border: #ea77ff;
+      color: #ea77ff;
+    }
+
+    .tile-dr {
+      bottom: 8%;
+      left: calc(50% - 55px);
+      --rot: -4deg;
+      --tile-bg: linear-gradient(145deg, #161d2b 0%, #232d42 100%);
+      --tile-border: rgba(255, 255, 255, 0.45);
+      color: #ffffff;
+    }
+
+    .dr-wheel {
+      display: grid;
+      grid-template-columns: repeat(2, 11px);
+      gap: 3px;
+    }
+
+    .dr-wheel span {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      display: block;
+    }
+
+    .dr-wheel span:nth-child(1) { background: #26c6da; }
+    .dr-wheel span:nth-child(2) { background: #ff5252; }
+    .dr-wheel span:nth-child(3) { background: #ffca28; }
+    .dr-wheel span:nth-child(4) { background: #66bb6a; }
+
+    /* =====================================================================
+       THE CREATIVE MIND — ABOUT ME SECTION (DARK NAVY + INTERACTIVE GEO BG)
+       ===================================================================== */
+    .creative-mind-section {
+      position: relative;
+      width: 100%;
+      background: linear-gradient(180deg, #091020 0%, #0d172e 50%, #080d1a 100%);
+      color: var(--text-main);
+      padding: 88px 28px 96px;
+      border-top: 1px solid rgba(255, 255, 255, 0.14);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+      overflow: hidden;
+    }
+
+    #aboutGeoCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .cm-container {
+      position: relative;
+      z-index: 2;
+      max-width: 1220px;
+      margin: 0 auto;
+    }
+
+    .cm-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding-bottom: 14px;
+      margin-bottom: 42px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+      font-family: "Courier New", Courier, monospace;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #b8c6e3;
+    }
+
+    .cm-section-num {
+      background: var(--primary);
+      color: #ffffff;
+      padding: 5px 12px;
+      border-radius: 6px;
+    }
+
+    .cm-hero-grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.85fr) minmax(340px, 1.25fr);
+      gap: 40px;
+      align-items: center;
+      margin-bottom: 64px;
+    }
+
+    .cm-annotation {
+      font-family: "Courier New", Courier, monospace;
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .cm-display-title {
+      font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+      font-size: clamp(3rem, 6vw, 5.4rem);
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: #ffffff;
+    }
+
+    .cm-line { display: block; }
+    .cm-line-2 { color: var(--primary); transform: translateX(10px); }
+    .cm-line-3 {
+      display: inline-block;
+      background: var(--accent);
+      color: #070a11;
+      padding: 4px 14px 2px;
+      border-radius: 6px;
+      box-shadow: 0 10px 28px rgba(216, 255, 62, 0.22);
+      transform: rotate(-2deg);
+      margin-top: 8px;
+    }
+
+    .cm-divider-line {
+      width: 115px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      margin: 22px 0 12px;
+    }
+
+    .cm-handnote {
+      font-style: italic;
+      font-weight: 500;
+      font-size: 13.5px;
+      color: var(--text-muted);
+    }
+
+    .cm-collage-stage {
+      position: relative;
+      min-height: 450px;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: radial-gradient(circle at 70% 25%, rgba(49, 168, 255, 0.12), rgba(11, 18, 34, 0.9));
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+      padding: 24px;
+      overflow: hidden;
+    }
+
+    .collage-layer {
+      position: absolute;
+      inset: 0;
+      transition: transform 0.25s cubic-bezier(0.2, 0.85, 0.3, 1);
+      will-change: transform;
+    }
+
+    .layer-back { z-index: 1; }
+    .layer-mid { z-index: 2; }
+    .layer-center { z-index: 4; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+    .layer-front { z-index: 5; pointer-events: none; }
+
+    .cutout-shape { position: absolute; border: 1.5px solid rgba(255, 255, 255, 0.24); }
+
+    .cutout-red-block {
+      width: 190px;
+      height: 126px;
+      top: 12%;
+      right: 9%;
+      background: rgba(240, 68, 50, 0.88);
+      transform: rotate(7deg);
+      clip-path: polygon(0% 8%, 96% 0%, 100% 92%, 4% 100%);
+    }
+
+    .cutout-lime-circle {
+      width: 136px;
+      height: 136px;
+      bottom: 12%;
+      left: 10%;
+      border-radius: 50%;
+      background: rgba(216, 255, 62, 0.18);
+      border-color: rgba(216, 255, 62, 0.55);
+    }
+
+    .collage-svg { position: absolute; }
+    .svg-grid-burst { width: 146px; height: 146px; top: 8%; left: 8%; }
+    .svg-arrow-curled { width: 124px; height: 80px; bottom: 22%; right: 14%; }
+    .svg-scribble { width: 116px; height: 52px; top: 56%; left: 8%; transform: rotate(-8deg); }
+
+    .collage-sticker {
+      position: absolute;
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border: 1.5px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+      cursor: pointer;
+      pointer-events: auto;
+      transition: transform 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+    }
+
+    .collage-sticker:hover { transform: scale(1.06) rotate(0deg); }
+
+    .sticker-design { top: 14%; left: 28%; font-size: 13px; background: #14213d; color: #ffffff; transform: rotate(-6deg); }
+    .sticker-motion { top: 34%; right: 11%; font-size: 13px; background: var(--accent); color: #070a11; transform: rotate(8deg); }
+    .sticker-ai { top: 16%; right: 26%; font-size: 15px; background: #070a11; color: var(--accent); transform: rotate(-9deg); }
+    .sticker-ideas { bottom: 24%; left: 24%; font-size: 13px; background: var(--primary); color: #ffffff; transform: rotate(5deg); }
+    .sticker-experiment { bottom: 11%; right: 22%; font-size: 12px; background: #1b2a4a; color: #8ccbff; transform: rotate(-4deg); }
+    .sticker-create-more { top: 63%; right: 10%; font-size: 11.5px; background: #070a11; color: #ffffff; transform: rotate(6deg); }
+
+    .cm-center-badge {
+      position: relative;
+      background: #070a11;
+      color: #ffffff;
+      padding: 18px 34px;
+      border-radius: 14px;
+      border: 2px solid rgba(255, 255, 255, 0.24);
+      box-shadow: 0 16px 38px rgba(0, 0, 0, 0.55), 0 0 0 3px var(--primary);
+      transform: rotate(-3deg);
+      text-align: center;
+    }
+
+    .cm-center-sub {
+      display: block;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      color: var(--accent);
+      margin-bottom: 2px;
+    }
+
+    .cm-center-word {
+      display: block;
+      font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+      font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+      line-height: 0.95;
+      letter-spacing: 0.04em;
+      color: #ffffff;
+    }
+
+    .cm-star-tag {
+      position: absolute;
+      top: -14px;
+      right: -14px;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #070a11;
+      display: grid;
+      place-items: center;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .cm-corner-tag {
+      position: absolute;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 4px 9px;
+      border-radius: 6px;
+      background: rgba(16, 26, 48, 0.9);
+      color: #d6e0f5;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .tag-tl { top: 10px; left: 10px; }
+    .tag-br { bottom: 10px; right: 10px; background: var(--accent); color: #070a11; }
+
+    .cm-rotating-star {
+      position: absolute;
+      bottom: 14px;
+      left: 14px;
+      font-size: 22px;
+      color: var(--primary);
+      display: inline-block;
+      animation: cmSpinStar 12s linear infinite;
+    }
+
+    @keyframes cmSpinStar {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .cm-lower-grid {
+      display: grid;
+      grid-template-columns: 1.08fr 1fr;
+      gap: 38px;
+      align-items: start;
+      padding-top: 34px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.2);
+    }
+
+    .cm-mini-label {
+      display: inline-block;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--accent);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-bottom: 14px;
+    }
+
+    .cm-intro-card {
+      background: rgba(16, 26, 48, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-left: 4px solid var(--primary);
+      border-radius: 18px;
+      padding: 24px 26px;
+      backdrop-filter: blur(10px);
+    }
+
+    .cm-intro-copy p {
+      font-size: 0.98rem;
+      line-height: 1.75;
+      color: #dbe4f7;
+      margin-bottom: 12px;
+    }
+
+    .cm-intro-copy p:first-child {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .cm-intro-copy p:last-child {
+      margin-bottom: 0;
+    }
+
+    .cm-skills-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .cm-skills-hint {
+      font-size: 12.5px;
+      color: var(--text-muted);
+    }
+
+    .cm-skills-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 13px;
+    }
+
+    .skill-sticker {
+      background: rgba(18, 29, 52, 0.92);
+      color: #ffffff;
+      border: 1.5px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      padding: 10px 15px;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+      transform: rotate(var(--tilt-deg, 0deg));
+      transition: transform 0.25s ease, background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+      cursor: pointer;
+      max-width: 285px;
+    }
+
+    .skill-sticker.skill-accent { background: var(--accent); color: #070a11; border-color: var(--accent); }
+    .skill-sticker.skill-red { background: var(--primary); color: #ffffff; border-color: var(--primary); }
+    .skill-sticker.skill-dark { background: #070a11; color: #8ccbff; border-color: rgba(140, 203, 255, 0.35); }
+
+    .skill-title { display: block; font-weight: 800; font-size: 13.5px; }
+    .skill-detail {
+      display: block;
+      font-size: 11.5px;
+      line-height: 1.45;
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px dashed currentColor;
+      opacity: 0.9;
+    }
+
+    .skill-sticker:hover,
+    .skill-sticker:focus-visible {
+      transform: rotate(calc(var(--tilt-deg, 0deg) * -1.4)) translateY(-4px) scale(1.03);
+      background: #ffffff;
+      color: #070a11;
+      border-color: #ffffff;
+      outline: none;
+    }
+
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.85, 0.3, 1);
+    }
+
+    [data-reveal].is-revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Shared Section Styling */
+    .section {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 96px 24px;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 52px;
+    }
+
+    .section-kicker {
+      font-size: 12.5px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-blue);
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-size: clamp(1.9rem, 3.8vw, 2.7rem);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      margin-bottom: 12px;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      max-width: 660px;
+      margin: 0 auto;
+      line-height: 1.65;
+      font-size: 15.5px;
+    }
+
+    .glass-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: 24px;
+      padding: 32px;
+      backdrop-filter: blur(12px);
+    }
+
+    /* Tools Grid */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 20px;
+    }
+
+    .tool-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: 22px;
+      padding: 26px 22px;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255, 255, 255, 0.26);
+    }
+
+    .tool-pill {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.15rem;
+      margin-bottom: 16px;
+    }
+
+    .tool-card h4 {
+      font-size: 1.08rem;
+      margin-bottom: 8px;
+    }
+
+    .tool-card p {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Projects Gallery & Tabs */
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 36px;
+    }
+
+    .filter-btn,
+    .pick-folder-btn {
+      padding: 10px 22px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-muted);
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+      background: #ffffff;
+      color: #070a11;
+      border-color: #ffffff;
+    }
+
+    .pick-folder-btn {
+      background: rgba(49, 168, 255, 0.16);
+      border-color: rgba(49, 168, 255, 0.45);
+      color: #9ed4ff;
+    }
+
+    .pick-folder-btn:hover {
+      background: rgba(49, 168, 255, 0.28);
+      color: #ffffff;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 24px;
+    }
+
+    .project-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: 22px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .project-card.hidden {
+      display: none;
+    }
+
+    .project-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255, 255, 255, 0.28);
+    }
+
+    .project-media {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      background: linear-gradient(145deg, #10192d, #1c2844);
+      overflow: hidden;
+    }
+
+    .project-media.is-clickable {
+      cursor: pointer;
+    }
+
+    .project-media img,
+    .project-media video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .project-card:hover .project-media img {
+      transform: scale(1.04);
+    }
+
+    .media-fallback-box {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      gap: 8px;
+      background: linear-gradient(145deg, rgba(16, 25, 45, 0.95), rgba(25, 36, 62, 0.95));
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .media-fallback-box code {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.35);
+      color: #8ccbff;
+      max-width: 100%;
+      word-break: break-all;
+    }
+
+    .project-tag {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      z-index: 3;
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-weight: 700;
+      background: rgba(7, 10, 17, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(8px);
+      color: #ffffff;
+    }
+
+    .project-body {
+      padding: 18px 22px 22px;
+    }
+
+    .project-body h3 {
+      font-size: 1.06rem;
+      margin-bottom: 4px;
+    }
+
+    .project-body p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Catalog / Flipbook Feature Box */
+    .catalog-showcase {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .catalog-frame-wrap {
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      background: rgba(10, 15, 28, 0.9);
+      min-height: 460px;
+    }
+
+    .catalog-frame-wrap iframe {
+      width: 100%;
+      height: 480px;
+      border: 0;
+      display: block;
+    }
+
+    /* Contact Section */
+    .contact-box {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: background 0.2s ease;
+    }
+
+    .contact-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 13px 16px;
+      border-radius: 14px;
+      border: 1px solid var(--border-subtle);
+      background: rgba(7, 10, 17, 0.7);
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      border-color: var(--accent-blue);
+    }
+
+    .form-status {
+      font-size: 13px;
+      color: #66bb6a;
+      min-height: 18px;
+    }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid var(--border-subtle);
+      text-align: center;
+      padding: 28px 20px;
+      color: var(--text-muted);
+      font-size: 13.5px;
+    }
+
+    /* Lightbox Modal */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(4, 6, 12, 0.92);
+      backdrop-filter: blur(10px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .lightbox.open {
+      display: flex;
+    }
+
+    .lightbox img {
+      max-width: 92vw;
+      max-height: 88vh;
+      border-radius: 16px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 22px;
+      right: 28px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 980px) {
+      .cm-hero-grid,
+      .cm-lower-grid {
+        grid-template-columns: 1fr;
+      }
+      .cm-collage-stage {
+        min-height: 400px;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .navbar {
+        padding: 14px 20px;
+      }
+      .nav-links {
+        display: none;
+      }
+      .catalog-showcase,
+      .contact-box {
+        grid-template-columns: 1fr;
+      }
+      .app-tile {
+        width: 84px;
+        height: 84px;
+      }
+      .tile-ps { top: 10%; left: 5%; }
+      .tile-ai { top: 12%; right: 5%; }
+      .tile-ae { bottom: 14%; left: 6%; }
+      .tile-pr { bottom: 14%; right: 6%; }
+      .tile-dr { bottom: 4%; left: calc(50% - 42px); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .app-tile,
+      .collage-layer,
+      .collage-sticker,
+      .skill-sticker,
+      .hero-title,
+      .hero-title-shine,
+      [data-reveal] {
+        transition: none !important;
+        animation: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+      }
+      .hero-spark { display: none !important; }
+    }
+
+
+    /* ===== PURPLE / INDIGO WEBSITE THEME ===== */
+    :root {
+      --bg-dark: #0A1123;
+      --navy-deep: #0A1123;
+      --navy-panel: #3A3E6C;
+      --card-bg: rgba(58, 62, 108, 0.82);
+      --text-main: #F1F0FA;
+      --text-muted: #B8BAD0;
+      --border-subtle: rgba(149, 155, 181, 0.24);
+      --accent-blue: #8387C3;
+      --accent-pink: #959BB5;
+      --accent-orange: #8A8CAC;
+      --primary: #8387C3;
+      --dark: #0A1123;
+      --paper: #959BB5;
+      --accent: #8387C3;
+    }
+    body {
+      background: radial-gradient(circle at 50% 18%, #3A3E6C 0%, #0A1123 72%);
+      color: #F1F0FA;
+    }
+    .navbar {
+      background: rgba(10, 17, 35, 0.92);
+      border-bottom-color: rgba(149, 155, 181, 0.22);
+      box-shadow: 0 4px 24px rgba(10, 17, 35, 0.24);
+    }
+    .brand-mark, .hero-title, .section-title, .project-body h3,
+    .cm-display-title, .cm-center-word { color: #F1F0FA; }
+    .brand-dot { background: linear-gradient(135deg, #8387C3, #959BB5); box-shadow: 0 0 14px rgba(131, 135, 195, 0.5); }
+    .nav-links, .hero-subtitle, .section-desc, .project-body p,
+    .cm-intro-copy, .cm-skills-hint { color: #B8BAD0; }
+    .nav-links a:hover { color: #959BB5; }
+    .btn-ghost, .hero-cta-secondary {
+      background: rgba(149, 155, 181, 0.12);
+      color: #F1F0FA;
+      border-color: rgba(149, 155, 181, 0.32);
+    }
+    .btn-ghost:hover, .hero-cta-secondary:hover { background: rgba(131, 135, 195, 0.22); }
+    .btn-primary, .hero-cta-main {
+      background: #8387C3;
+      color: #0A1123;
+      border-color: #8387C3;
+    }
+    .btn-primary:hover, .hero-cta-main:hover { background: #959BB5; border-color: #959BB5; }
+    .hero-badge {
+      color: #D9DAEC;
+      background: rgba(131, 135, 195, 0.18);
+      border-color: rgba(149, 155, 181, 0.32);
+    }
+    .hero-title { text-shadow: 0 8px 28px rgba(10, 17, 35, 0.55); }
+    .hero-title-shine {
+      background: radial-gradient(170px circle at var(--mx, 50%) var(--my, 50%), #959BB5 0%, #8387C3 48%, #3A3E6C 78%, transparent 90%);
+      -webkit-background-clip: text; background-clip: text;
+    }
+    .hero-name-wrap.is-active .hero-title { text-shadow: 0 0 24px rgba(131, 135, 195, 0.42); }
+    .creative-mind-section {
+      background: linear-gradient(180deg, #0A1123 0%, #3A3E6C 55%, #0A1123 100%);
+      color: #F1F0FA;
+    }
+    .cm-top-bar, .cm-divider-line { border-color: rgba(149, 155, 181, 0.3); }
+    .cm-annotation, .cm-section-num, .cm-mini-label, .cm-handnote { color: #B8BAD0; }
+    .cm-line-2 { color: #8387C3; }
+    .cm-line-3 { color: #959BB5; }
+    .cm-intro-card, .glass-card, .tool-card, .project-card, .contact-box,
+    .contact-item, .contact-form input, .contact-form textarea {
+      background: rgba(58, 62, 108, 0.72);
+      color: #F1F0FA;
+      border-color: rgba(149, 155, 181, 0.24);
+      box-shadow: 0 14px 38px rgba(10, 17, 35, 0.22);
+    }
+    .tool-card h4, .project-body h3, .contact-item, .contact-box { color: #F1F0FA; }
+    .tool-card p, .project-body p { color: #B8BAD0; }
+    .tool-pill, .filter-btn, .pick-folder-btn, .skill-sticker {
+      background: #3A3E6C; color: #F1F0FA; border-color: rgba(149, 155, 181, 0.3);
+    }
+    .filter-btn.active, .filter-btn:hover, .pick-folder-btn,
+    .skill-sticker.skill-accent, .cm-center-badge, .cm-star-tag {
+      background: #8387C3; color: #0A1123; border-color: #8387C3;
+    }
+    .skill-sticker.skill-red, .sticker-ideas { background: #959BB5; color: #0A1123; border-color: #959BB5; }
+    .skill-sticker.skill-dark, .sticker-ai, .sticker-create-more {
+      background: #0A1123; color: #F1F0FA; border-color: #8387C3;
+    }
+    .sticker-design, .sticker-experiment { background: #3A3E6C; color: #F1F0FA; border: 1px solid #8387C3; }
+    .sticker-motion, .tag-br { background: #8A8CAC; color: #0A1123; }
+    .cutout-red-block { background: rgba(10, 17, 35, 0.9); }
+    .cutout-lime-circle { background: rgba(131, 135, 195, 0.28); border-color: rgba(149, 155, 181, 0.38); }
+    .cm-center-badge { box-shadow: 0 12px 28px rgba(10, 17, 35, 0.3); }
+    .contact-form input, .contact-form textarea { background: rgba(10, 17, 35, 0.72); color: #F1F0FA; }
+    .contact-form input::placeholder, .contact-form textarea::placeholder { color: #B8BAD0; }
+    .contact-form input:focus, .contact-form textarea:focus { border-color: #8387C3; outline-color: #959BB5; }
+    .footer { color: #B8BAD0; border-color: rgba(149, 155, 181, 0.24); }
+    .lightbox { background: rgba(10, 17, 35, 0.96); }
+    .project-tag { background: #8387C3; color: #0A1123 !important; }
+    .hero-aura { background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(131, 135, 195, 0.42), rgba(58, 62, 108, 0.22) 42%, transparent 72%); }
+    ::selection { background: #8387C3; color: #0A1123; }
+</style>
+</head>
+<body>
+  <canvas id="geoCanvas"></canvas>
+
+  <div class="site-wrapper">
+    <!-- Navbar -->
+    <header class="navbar">
+      <a class="brand-mark" href="#home">
+        <span class="brand-dot"></span>
+        <span>habiba elsayed</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Tools</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#catalog">Flipbook</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button id="replayBtn" class="btn-ghost" type="button">Replay Sequence</button>
+        <a class="btn-primary" href="#contact">Hire Me</a>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <div class="icons-stage" id="iconsStage">
+        <div class="app-tile tile-ps" data-slot="ps">
+          <span class="app-code">Ps</span>
+          <span class="app-name">Photoshop</span>
+        </div>
+
+        <div class="app-tile tile-ai" data-slot="ai">
+          <span class="app-code">Ai</span>
+          <span class="app-name">Illustrator</span>
+        </div>
+
+        <div class="app-tile tile-ae" data-slot="ae">
+          <span class="app-code">Ae</span>
+          <span class="app-name">After Effects</span>
+        </div>
+
+        <div class="app-tile tile-pr" data-slot="pr">
+          <span class="app-code">Pr</span>
+          <span class="app-name">Premiere Pro</span>
+        </div>
+
+        <div class="app-tile tile-dr" data-slot="dr">
+          <div class="dr-wheel">
+            <span></span><span></span><span></span><span></span>
+          </div>
+          <span class="app-name">DaVinci Resolve</span>
+        </div>
+      </div>
+
+      <div class="hero-content">
+        <span class="hero-badge">Graphic Designer & Video Editor</span>
+        <div class="hero-name-wrap" id="heroNameWrap">
+          <div class="hero-aura" aria-hidden="true"></div>
+          <h1 class="hero-title" id="heroNameTitle">habiba elsayed</h1>
+          <span class="hero-title-shine" id="heroNameShine" aria-hidden="true">habiba elsayed</span>
+        </div>
+        <p class="hero-subtitle">
+          Crafting clean brand identities, high-impact social media visuals, and dynamic motion & video edits.
+        </p>
+        <div class="hero-buttons">
+          <a class="hero-cta-main" href="#projects">Explore Portfolio</a>
+          <a class="hero-cta-secondary" href="https://heyzine.com/flip-book/fc9a0024b3.html" target="_blank" rel="noopener">Open Flipbook Catalog ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE CREATIVE MIND — ABOUT ME SECTION -->
+    <section class="creative-mind-section" id="about" aria-labelledby="creativeMindTitle">
+      <canvas id="aboutGeoCanvas" aria-hidden="true"></canvas>
+
+      <div class="cm-container">
+        <div class="cm-top-bar">
+          <span>HABIBA — CREATIVE STUDIO</span>
+          <span class="cm-section-num">ABOUT / 01</span>
+        </div>
+
+        <div class="cm-hero-grid">
+          <div data-reveal>
+            <p class="cm-annotation">01 // A MIND FULL OF POSSIBILITIES</p>
+            <h2 id="creativeMindTitle" class="cm-display-title">
+              <span class="cm-line cm-line-1">INSIDE MY</span>
+              <span class="cm-line cm-line-2">CREATIVE</span>
+              <span class="cm-line cm-line-3">MIND.</span>
+            </h2>
+            <div class="cm-divider-line"></div>
+            <p class="cm-handnote">raw ideas → bold frames → living motion ✦</p>
+          </div>
+
+          <div class="cm-collage-stage" id="collageStage" aria-label="Experimental mixed-media creative mind collage">
+            <div class="collage-layer layer-back" data-scroll-speed="-0.12" data-parallax="0.14">
+              <div class="cutout-shape cutout-red-block"></div>
+              <div class="cutout-shape cutout-lime-circle"></div>
+              <svg class="collage-svg svg-grid-burst" viewBox="0 0 180 180" fill="none">
+                <circle cx="90" cy="90" r="76" stroke="#D8FF3E" stroke-width="1.8" stroke-dasharray="6 6" opacity="0.7" />
+                <line x1="14" y1="90" x2="166" y2="90" stroke="#ffffff" stroke-width="1.2" opacity="0.4" />
+                <line x1="90" y1="14" x2="90" y2="166" stroke="#ffffff" stroke-width="1.2" opacity="0.4" />
+                <polygon points="90,18 104,76 162,90 104,104 90,162 76,104 18,90 76,76" fill="#D8FF3E" stroke="#070a11" stroke-width="2" />
+              </svg>
+            </div>
+
+            <div class="collage-layer layer-mid" data-scroll-speed="0.08" data-parallax="0.28">
+              <div class="collage-sticker sticker-design">DESIGN</div>
+              <div class="collage-sticker sticker-motion">MOTION</div>
+              <div class="collage-sticker sticker-ai">AI</div>
+              <div class="collage-sticker sticker-ideas">IDEAS</div>
+              <div class="collage-sticker sticker-experiment">EXPERIMENT</div>
+              <div class="collage-sticker sticker-create-more">CREATE MORE</div>
+
+              <svg class="collage-svg svg-arrow-curled" viewBox="0 0 140 90" fill="none">
+                <path d="M12 72 C 45 18, 95 16, 124 44" stroke="#F04432" stroke-width="3.5" stroke-linecap="round" />
+                <path d="M108 46 L 125 45 L 120 28" stroke="#F04432" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+
+              <svg class="collage-svg svg-scribble" viewBox="0 0 130 60" fill="none">
+                <path d="M8 36 Q 22 8, 36 34 T 64 34 T 92 34 T 122 30" stroke="#D8FF3E" stroke-width="2.5" stroke-linecap="round" />
+              </svg>
+            </div>
+
+            <div class="collage-layer layer-center" data-scroll-speed="0.16" data-parallax="0.42">
+              <div class="cm-center-badge">
+                <span class="cm-center-sub">CORE ENGINE</span>
+                <span class="cm-center-word">CREATE</span>
+                <span class="cm-star-tag" aria-hidden="true">★</span>
+              </div>
+            </div>
+
+            <div class="collage-layer layer-front" data-scroll-speed="-0.06" data-parallax="0.55">
+              <span class="cm-corner-tag tag-tl">FIG. 01 — EDITORIAL</span>
+              <span class="cm-corner-tag tag-br">NO RULES / PURE CRAFT</span>
+              <span class="cm-rotating-star" aria-hidden="true">✺</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cm-lower-grid">
+          <div data-reveal>
+            <span class="cm-mini-label">MANIFESTO // 02</span>
+            <div class="cm-intro-card">
+              <blockquote class="cm-intro-copy">
+                <p>Hey, I'm Habiba.</p>
+                <p>I'm a Graphic Designer and Creative Video Editor who loves transforming ideas into visual experiences.</p>
+                <p>My work spans social media campaigns, commercial product visuals, interior and ceramic presentation mockups, interactive catalogs, and fast-paced video edits with strong pacing and color polish.</p>
+                <p>I explore the intersection of design, motion and AI to create visuals that communicate, inspire and stand out — paying close attention to balance, lighting, hierarchy, and emotional rhythm.</p>
+              </blockquote>
+            </div>
+          </div>
+
+          <div data-reveal>
+            <div class="cm-skills-header">
+              <span class="cm-mini-label">CREATIVE TOOLBOX // HOVER TO INSPECT</span>
+              <span class="cm-skills-hint">Interactive stickers &amp; tags</span>
+            </div>
+
+            <div class="cm-skills-cloud" role="list">
+              <div class="skill-sticker" role="listitem" tabindex="0" style="--tilt-deg: -3deg;">
+                <span class="skill-title">Graphic Design</span>
+                <span class="skill-detail">Bold layouts, brand systems, mockups &amp; campaign visuals.</span>
+              </div>
+              <div class="skill-sticker skill-accent" role="listitem" tabindex="0" style="--tilt-deg: 2.5deg;">
+                <span class="skill-title">Video Editing</span>
+                <span class="skill-detail">Rhythm, cuts, pacing &amp; story-driven social edits.</span>
+              </div>
+              <div class="skill-sticker skill-red" role="listitem" tabindex="0" style="--tilt-deg: -2deg;">
+                <span class="skill-title">AI Creative</span>
+                <span class="skill-detail">Experimental concepting, visual synthesis &amp; rapid exploration.</span>
+              </div>
+              <div class="skill-sticker" role="listitem" tabindex="0" style="--tilt-deg: 3.5deg;">
+                <span class="skill-title">Visual Storytelling</span>
+                <span class="skill-detail">Turning raw messages into clear, memorable visual narratives.</span>
+              </div>
+              <div class="skill-sticker skill-dark" role="listitem" tabindex="0" style="--tilt-deg: -1.5deg;">
+                <span class="skill-title">Adobe Photoshop</span>
+                <span class="skill-detail">Compositing, retouching, lighting &amp; promotional key visuals.</span>
+              </div>
+              <div class="skill-sticker skill-accent" role="listitem" tabindex="0" style="--tilt-deg: 2deg;">
+                <span class="skill-title">Adobe Illustrator</span>
+                <span class="skill-detail">Precision vectors, logos, typography &amp; print-ready grids.</span>
+              </div>
+              <div class="skill-sticker skill-red" role="listitem" tabindex="0" style="--tilt-deg: -3deg;">
+                <span class="skill-title">Adobe Premiere Pro</span>
+                <span class="skill-detail">Timeline mastery, dynamic cuts, audio sync &amp; commercial reels.</span>
+              </div>
+              <div class="skill-sticker skill-dark" role="listitem" tabindex="0" style="--tilt-deg: 1.5deg;">
+                <span class="skill-title">Creative Thinking</span>
+                <span class="skill-detail">Unconventional angles, contrast &amp; problem-solving by design.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tools Section -->
+    <section class="section" id="skills">
+      <div class="section-header">
+        <div class="section-kicker">Creative Stack</div>
+        <h2 class="section-title">Tools I Work With Daily</h2>
+      </div>
+
+      <div class="tools-grid">
+        <div class="tool-card">
+          <div class="tool-pill" style="background:#001e36; color:#31a8ff; border:1px solid #31a8ff;">Ps</div>
+          <h4>Adobe Photoshop</h4>
+          <p>Commercial social media creatives, photo manipulation, product mockups, and print layouts.</p>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-pill" style="background:#330000; color:#ff9a00; border:1px solid #ff9a00;">Ai</div>
+          <h4>Adobe Illustrator</h4>
+          <p>Logo design, vector illustrations, brand guidelines, packaging, and typography systems.</p>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-pill" style="background:#00005b; color:#9999ff; border:1px solid #9999ff;">Ae</div>
+          <h4>Adobe After Effects</h4>
+          <p>Logo reveals, kinetic typography, UI animations, and visual effects for social reels.</p>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-pill" style="background:#2a0038; color:#ea77ff; border:1px solid #ea77ff;">Pr</div>
+          <h4>Adobe Premiere Pro</h4>
+          <p>Promotional video editing, pacing, sound sync, and multi-platform vertical/horizontal exports.</p>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-pill" style="background:#161d2b; color:#26c6da; border:1px solid rgba(255,255,255,0.35);">DR</div>
+          <h4>DaVinci Resolve</h4>
+          <p>Color correction, cinematic color grading, and polished post-production finishing.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section (Separated Graphic & Video) -->
+    <section class="section" id="projects">
+      <div class="section-header">
+        <div class="section-kicker">Portfolio</div>
+        <h2 class="section-title">Selected Works</h2>
+        <p class="section-desc">
+          Switch between Graphic Design and Video & Motion — click any design image to zoom, or play any video directly.
+        </p>
+      </div>
+
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all" type="button">All Works</button>
+        <button class="filter-btn" data-filter="graphic" type="button">Graphic Design</button>
+        <button class="filter-btn" data-filter="video" type="button">Video & Motion</button>
+        <button class="pick-folder-btn" id="pickFolderButton" type="button">
+          + اختيار فولدر كامل
+        </button>
+        <button class="pick-folder-btn" id="pickFilesButton" type="button">
+          + اختيار الصور والفيديوهات يدويًا
+        </button>
+        <input
+          id="mediaPicker"
+          type="file"
+          accept="image/*,video/*,.jpg,.jpeg,.png,.webp,.gif,.avif,.svg,.mp4,.webm,.mov,.m4v,.ogg"
+          webkitdirectory
+          directory
+          multiple
+          aria-label="اختيار فولدر الصور والفيديوهات"
+          style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;"
+        />
+        <input
+          id="mediaFilesPicker"
+          type="file"
+          accept="image/*,video/*,.jpg,.jpeg,.png,.webp,.gif,.avif,.svg,.mp4,.webm,.mov,.m4v,.ogg"
+          multiple
+          aria-label="اختيار ملفات الصور والفيديوهات"
+          style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;"
+        />
+        <span id="mediaCount" aria-live="polite" style="color:var(--text-muted);font-size:13px;"></span>
+      </div>
+
+      <div class="projects-grid" id="projectsGrid">
+        <!-- VIDEO SECTION ITEMS -->
+        <article class="project-card" data-category="video">
+          <div class="project-media">
+            <span class="project-tag" style="color:#9999ff;">Video Reel</span>
+            <video controls preload="metadata" poster="nova.png" onerror="handleVideoFallback(this, 'WhatsApp Video 2026-11-24 at 11.00.27 AM.mp4')">
+              <source src="WhatsApp Video 2026-11-24 at 11.00.27 AM.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="project-body">
+            <h3>Video Edit 01</h3>
+            <p>Edited video reel from portfolio folder.</p>
+          </div>
+        </article>
+
+        <article class="project-card" data-category="video">
+          <div class="project-media">
+            <span class="project-tag" style="color:#9999ff;">Video Reel</span>
+            <video controls preload="metadata" poster="lamar.png" onerror="handleVideoFallback(this, 'WhatsApp Video 2026-11-24 at 11.00.35 AM.mp4')">
+              <source src="WhatsApp Video 2026-11-24 at 11.00.35 AM.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="project-body">
+            <h3>Video Edit 02</h3>
+            <p>Edited video reel from portfolio folder.</p>
+          </div>
+        </article>
+
+        <article class="project-card" data-category="video">
+          <div class="project-media">
+            <span class="project-tag" style="color:#9999ff;">Video Reel</span>
+            <video controls preload="metadata" poster="PLANCO1.png" onerror="handleVideoFallback(this, 'WhatsApp Video 2026-11-24 at 11.02.08 AM.mp4')">
+              <source src="WhatsApp Video 2026-11-24 at 11.02.08 AM.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="project-body">
+            <h3>Video Edit 03</h3>
+            <p>Edited video reel from portfolio folder.</p>
+          </div>
+        </article>
+
+        <article class="project-card" data-category="video">
+          <div class="project-media">
+            <span class="project-tag" style="color:#9999ff;">Video Reel</span>
+            <video controls preload="metadata" poster="novag.png" onerror="handleVideoFallback(this, 'WhatsApp Video 2026-11-24 at 11.02.09 AM.mp4')">
+              <source src="WhatsApp Video 2026-11-24 at 11.02.09 AM.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="project-body">
+            <h3>Video Edit 04</h3>
+            <p>Edited video reel from portfolio folder.</p>
+          </div>
+        </article>
+
+        <!-- GRAPHIC DESIGN SECTION ITEMS -->
+        <article class="project-card" data-category="graphic">
+          <div class="project-media is-clickable" onclick="openLightbox(this)">
+            <span class="project-tag">Graphic Design</span>
+            <img src="elizabeth.png" alt="Elizabeth" onerror="handleImgFallback(this, 'elizabeth.png')" />
+          </div>
+          <div class="project-body">
+            <h3>Elizabeth</h3>
+            <p>Graphic design showcase piece.</p>
+          </div>
+        </article>
+
+        <article class="project-card" data-category="graphic">
+          <div class="project-media is-clickable" onclick="openLightbox(this)">
+            <span class="project-tag">Graphic Design</span>
+            <img src="lamar.png" alt="Lamar" onerror="handleImgFallback(this, 'lamar.png')" />
+          </div>
+          <div class="project-body">
+            <h3>Lamar</h3>
+            <p>Graphic design showcase piece.</p>
+          </div>
+        </article>
+
+        <article class="project-card" data-category="graphic">
+          <div class="project-media is-clickable" onclick="openLightbox(this)">
+            <span class="project-tag">Graphic Design</span>
+            <img src="nova.png" alt="Nova" onerror="handleImgFallback(this, 'nova.png')" />
+          </div>
+          <div class="project-body">
+            <h3>Nova</h3>
+            <p>Graphic design showcase piece.</p>
+          </div>
+        </article>
+
+        <article class="project-card" data-category="graphic">
+          <div class="project-media is-clickable" onclick="openLightbox(this)">
+            <span class="project-tag">Graphic Design</span>
+            <img src="novag.png" alt="Novag" onerror="handleImgFallback(this, 'novag.png')" />
+          </div>
+          <div class="project-body">
+            <h3>Novag</h3>
+            <p>Graphic design showcase piece.</p>
+          </div>
+        </article>
+
+        <article class="project-card" data-category="graphic">
+          <div class="project-media is-clickable" onclick="openLightbox(this)">
+            <span class="project-tag">Graphic Design</span>
+            <img src="ooo.png" alt="OOO" onerror="handleImgFallback(this, 'ooo.png')" />
+          </div>
+          <div class="project-body">
+            <h3>OOO</h3>
+            <p>Graphic design showcase piece.</p>
+          </div>
+        </article>
+
+        <article class="project-card" data-category="graphic">
+          <div class="project-media is-clickable" onclick="openLightbox(this)">
+            <span class="project-tag">Graphic Design</span>
+            <img src="PLANCO.png" alt="PLANCO" onerror="handleImgFallback(this, 'PLANCO.png')" />
+          </div>
+          <div class="project-body">
+            <h3>PLANCO</h3>
+            <p>Graphic design showcase piece.</p>
+          </div>
+        </article>
+
+        <article class="project-card" data-category="graphic">
+          <div class="project-media is-clickable" onclick="openLightbox(this)">
+            <span class="project-tag">Graphic Design</span>
+            <img src="PLANCO1.png" alt="PLANCO 01" onerror="handleImgFallback(this, 'PLANCO1.png')" />
+          </div>
+          <div class="project-body">
+            <h3>PLANCO 01</h3>
+            <p>Graphic design showcase piece.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Catalog / Flipbook Feature Box -->
+    <section class="section" id="catalog">
+      <div class="section-header">
+        <div class="section-kicker">Interactive Catalog</div>
+        <h2 class="section-title">Flipbook Portfolio</h2>
+        <p class="section-desc">
+          Browse the full flipbook catalog directly or open it in a dedicated tab.
+        </p>
+      </div>
+
+      <div class="catalog-showcase">
+        <div class="glass-card">
+          <h3 style="font-size:1.35rem; margin-bottom:12px;">Complete Visual Catalog</h3>
+          <p style="color:var(--text-muted); line-height:1.75; font-size:14.5px; margin-bottom:20px;">
+            Explore curated layouts, campaigns, and visual showcases inside an interactive page-turning flipbook experience.
+          </p>
+          <a class="btn-primary" href="https://heyzine.com/flip-book/fc9a0024b3.html" target="_blank" rel="noopener">
+            Open Full Flipbook ↗
+          </a>
+        </div>
+
+        <div class="catalog-frame-wrap">
+          <iframe
+            src="https://heyzine.com/flip-book/fc9a0024b3.html"
+            title="Habiba Elsayed Flipbook Catalog"
+            loading="lazy"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section" id="contact">
+      <div class="section-header">
+        <div class="section-kicker">Get In Touch</div>
+        <h2 class="section-title">Let's Build Something Bold</h2>
+        <p class="section-desc">
+          Available for graphic design campaigns, video editing, reels, and creative collaborations.
+        </p>
+      </div>
+
+      <div class="glass-card contact-box">
+        <div>
+          <h3 style="font-size:1.35rem; margin-bottom:10px;">Direct Channels</h3>
+          <p style="color:var(--text-muted); font-size:14.5px; line-height:1.65;">
+            Reach out directly for freelance projects, brand visuals, or video editing work.
+          </p>
+          <div class="contact-links">
+            <a class="contact-item" href="https://heyzine.com/flip-book/fc9a0024b3.html" target="_blank" rel="noopener">
+              <span>Flipbook Catalog</span>
+              <span>↗</span>
+            </a>
+            <a class="contact-item" href="mailto:habiba@example.com">
+              <span>Email: habiba@example.com</span>
+              <span>✉</span>
+            </a>
+          </div>
+        </div>
+
+        <form class="contact-form" id="contactForm">
+          <input type="text" name="name" placeholder="Your Name" required />
+          <input type="email" name="email" placeholder="Your Email" required />
+          <textarea name="message" rows="4" placeholder="Tell me about your project, timeline, or idea..." required></textarea>
+          <button class="btn-primary" type="submit">Send Message</button>
+          <div class="form-status" id="formStatus"></div>
+        </form>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>© 2026 habiba elsayed — Graphic Designer & Video Editor.</p>
+    </footer>
+  </div>
+
+  <!-- Lightbox Modal -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image preview">
+    <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Close preview">×</button>
+    <img id="lightboxImg" src="" alt="Expanded artwork preview" />
+  </div>
+
+  <script>
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    /* Interactive Hero Name Spotlight, 3D Tilt & Subtle Sparks */
+    (function initHeroNameInteraction() {
+      const wrap = document.getElementById("heroNameWrap");
+      if (!wrap || prefersReducedMotion) return;
+
+      const isMobile = () => window.matchMedia("(max-width: 768px)").matches || "ontouchstart" in window;
+      const colors = ["#8ccbff", "#f3a8ff", "#ffca28", "#66bb6a"];
+      let lastSparkTime = 0;
+
+      function spawnSpark(x, y) {
+        const now = performance.now();
+        if (now - lastSparkTime < 75) return;
+        lastSparkTime = now;
+
+        const spark = document.createElement("span");
+        spark.className = "hero-spark";
+        spark.style.left = `${x}px`;
+        spark.style.top = `${y}px`;
+        spark.style.background = colors[Math.floor(Math.random() * colors.length)];
+        spark.style.setProperty("--dx", `${((Math.random() - 0.5) * 44).toFixed(0)}px`);
+        spark.style.setProperty("--dy", `${(-12 - Math.random() * 28).toFixed(0)}px`);
+        document.body.appendChild(spark);
+
+        setTimeout(() => spark.remove(), 680);
+      }
+
+      wrap.addEventListener("pointerenter", () => {
+        if (isMobile()) return;
+        wrap.classList.add("is-active");
+      });
+
+      wrap.addEventListener("pointermove", (e) => {
+        if (isMobile()) return;
+        const rect = wrap.getBoundingClientRect();
+        const relX = Math.max(0, Math.min(rect.width, e.clientX - rect.left));
+        const relY = Math.max(0, Math.min(rect.height, e.clientY - rect.top));
+        const pctX = ((relX / rect.width) * 100).toFixed(1);
+        const pctY = ((relY / rect.height) * 100).toFixed(1);
+
+        const normX = relX / rect.width - 0.5;
+        const normY = relY / rect.height - 0.5;
+        const rotY = (normX * 14).toFixed(2);
+        const rotX = (-normY * 12).toFixed(2);
+
+        wrap.style.setProperty("--mx", `${pctX}%`);
+        wrap.style.setProperty("--my", `${pctY}%`);
+        wrap.style.setProperty("--rx", `${rotX}deg`);
+        wrap.style.setProperty("--ry", `${rotY}deg`);
+        wrap.style.setProperty("--lift", `-3px`);
+
+        spawnSpark(e.clientX, e.clientY);
+      });
+
+      wrap.addEventListener("pointerleave", () => {
+        wrap.classList.remove("is-active");
+        wrap.style.setProperty("--rx", `0deg`);
+        wrap.style.setProperty("--ry", `0deg`);
+        wrap.style.setProperty("--lift", `0px`);
+      });
+    })();
+
+    /* Crisp Ambient Geometric Background (Full Page) */
+    (function initGeoCanvas() {
+      const canvas = document.getElementById("geoCanvas");
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+
+      let width = (canvas.width = window.innerWidth);
+      let height = (canvas.height = window.innerHeight);
+
+      const palette = [
+        { stroke: "rgba(49, 168, 255, 0.34)", fill: "rgba(49, 168, 255, 0.08)" },
+        { stroke: "rgba(234, 119, 255, 0.32)", fill: "rgba(234, 119, 255, 0.07)" },
+        { stroke: "rgba(255, 154, 0, 0.34)", fill: "rgba(255, 154, 0, 0.08)" },
+        { stroke: "rgba(216, 255, 62, 0.3)", fill: "rgba(216, 255, 62, 0.06)" }
+      ];
+
+      const shapes = Array.from({ length: 24 }, (_, i) => {
+        const tone = palette[i % palette.length];
+        return {
+          x: Math.random() * width,
+          y: Math.random() * height,
+          size: 20 + (i % 4) * 12,
+          vx: (Math.random() - 0.5) * 0.32,
+          vy: (Math.random() - 0.5) * 0.32,
+          angle: Math.random() * Math.PI * 2,
+          vAngle: (Math.random() - 0.5) * 0.006,
+          type: i % 4,
+          stroke: tone.stroke,
+          fill: tone.fill
+        };
+      });
+
+      window.addEventListener("resize", () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      });
+
+      function draw() {
+        ctx.clearRect(0, 0, width, height);
+        for (const s of shapes) {
+          if (!prefersReducedMotion) {
+            s.x = (s.x + s.vx + width) % width;
+            s.y = (s.y + s.vy + height) % height;
+            s.angle += s.vAngle;
+          }
+
+          ctx.save();
+          ctx.translate(s.x, s.y);
+          ctx.rotate(s.angle);
+          ctx.strokeStyle = s.stroke;
+          ctx.fillStyle = s.fill;
+          ctx.lineWidth = 1.9;
+
+          if (s.type === 0) {
+            ctx.beginPath();
+            ctx.rect(-s.size / 2, -s.size / 2, s.size, s.size);
+            ctx.fill();
+            ctx.stroke();
+          } else if (s.type === 1) {
+            ctx.beginPath();
+            ctx.arc(0, 0, s.size / 2, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+          } else if (s.type === 2) {
+            ctx.beginPath();
+            ctx.moveTo(0, -s.size * 0.58);
+            ctx.lineTo(s.size * 0.52, s.size * 0.44);
+            ctx.lineTo(-s.size * 0.52, s.size * 0.44);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+          } else {
+            ctx.beginPath();
+            ctx.moveTo(0, -s.size * 0.55);
+            ctx.lineTo(s.size * 0.55, 0);
+            ctx.lineTo(0, s.size * 0.55);
+            ctx.lineTo(-s.size * 0.55, 0);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+          }
+          ctx.restore();
+        }
+
+        if (!prefersReducedMotion) {
+          requestAnimationFrame(draw);
+        }
+      }
+
+      draw();
+    })();
+
+    /* Interactive Geometric Background Inside About Me Section */
+    (function initAboutGeoCanvas() {
+      const section = document.getElementById("about");
+      const canvas = document.getElementById("aboutGeoCanvas");
+      if (!section || !canvas) return;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+
+      let width = (canvas.width = section.clientWidth);
+      let height = (canvas.height = section.clientHeight);
+      const pointer = { x: -9999, y: -9999, active: false };
+
+      const items = Array.from({ length: 30 }, (_, i) => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5,
+        pushX: 0,
+        pushY: 0,
+        size: 16 + (i % 4) * 9,
+        angle: Math.random() * Math.PI * 2,
+        vAngle: (Math.random() - 0.5) * 0.015,
+        kind: i % 4,
+        stroke:
+          i % 4 === 0
+            ? "rgba(216, 255, 62, 0.46)"
+            : i % 4 === 1
+            ? "rgba(240, 68, 50, 0.48)"
+            : i % 4 === 2
+            ? "rgba(49, 168, 255, 0.44)"
+            : "rgba(234, 119, 255, 0.36)",
+        fill:
+          i % 4 === 0
+            ? "rgba(216, 255, 62, 0.08)"
+            : i % 4 === 1
+            ? "rgba(240, 68, 50, 0.08)"
+            : i % 4 === 2
+            ? "rgba(49, 168, 255, 0.08)"
+            : "rgba(234, 119, 255, 0.06)"
+      }));
+
+      function resizeCanvas() {
+        width = canvas.width = section.clientWidth;
+        height = canvas.height = section.clientHeight;
+      }
+
+      window.addEventListener("resize", resizeCanvas);
+
+      section.addEventListener("pointermove", (e) => {
+        const rect = section.getBoundingClientRect();
+        pointer.x = e.clientX - rect.left;
+        pointer.y = e.clientY - rect.top;
+        pointer.active = true;
+      });
+
+      section.addEventListener("pointerleave", () => {
+        pointer.active = false;
+      });
+
+      function render() {
+        ctx.clearRect(0, 0, width, height);
+
+        for (const el of items) {
+          if (!prefersReducedMotion) {
+            el.x += el.vx;
+            el.y += el.vy;
+            el.angle += el.vAngle;
+
+            if (el.x < -35) el.x = width + 35;
+            if (el.x > width + 35) el.x = -35;
+            if (el.y < -35) el.y = height + 35;
+            if (el.y > height + 35) el.y = -35;
+
+            if (pointer.active) {
+              const dx = el.x + el.pushX - pointer.x;
+              const dy = el.y + el.pushY - pointer.y;
+              const dist = Math.hypot(dx, dy) || 1;
+              const radius = 165;
+              if (dist < radius) {
+                const force = ((radius - dist) / radius) * 32;
+                el.pushX += (dx / dist) * force * 0.2;
+                el.pushY += (dy / dist) * force * 0.2;
+                el.angle += 0.04;
+              }
+            }
+
+            el.pushX *= 0.91;
+            el.pushY *= 0.91;
+          }
+
+          const drawX = el.x + el.pushX;
+          const drawY = el.y + el.pushY;
+
+          if (pointer.active) {
+            const pDist = Math.hypot(drawX - pointer.x, drawY - pointer.y);
+            if (pDist < 155) {
+              ctx.save();
+              ctx.strokeStyle = "rgba(216, 255, 62, 0.16)";
+              ctx.lineWidth = 1.1;
+              ctx.beginPath();
+              ctx.moveTo(pointer.x, pointer.y);
+              ctx.lineTo(drawX, drawY);
+              ctx.stroke();
+              ctx.restore();
+            }
+          }
+
+          ctx.save();
+          ctx.translate(drawX, drawY);
+          ctx.rotate(el.angle);
+          ctx.strokeStyle = el.stroke;
+          ctx.fillStyle = el.fill;
+          ctx.lineWidth = 2;
+
+          if (el.kind === 0) {
+            ctx.beginPath();
+            ctx.rect(-el.size / 2, -el.size / 2, el.size, el.size);
+            ctx.fill();
+            ctx.stroke();
+          } else if (el.kind === 1) {
+            ctx.beginPath();
+            ctx.moveTo(0, -el.size * 0.6);
+            ctx.lineTo(el.size * 0.55, el.size * 0.45);
+            ctx.lineTo(-el.size * 0.55, el.size * 0.45);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+          } else if (el.kind === 2) {
+            ctx.beginPath();
+            ctx.arc(0, 0, el.size * 0.48, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+          } else {
+            const h = el.size * 0.48;
+            ctx.beginPath();
+            ctx.moveTo(-h, 0);
+            ctx.lineTo(h, 0);
+            ctx.moveTo(0, -h);
+            ctx.lineTo(0, h);
+            ctx.stroke();
+          }
+
+          ctx.restore();
+        }
+
+        if (!prefersReducedMotion) {
+          requestAnimationFrame(render);
+        }
+      }
+
+      render();
+    })();
+
+    /* Hero Tool Tiles Sequence */
+    (function initHeroSequence() {
+      const tiles = Array.from(document.querySelectorAll(".app-tile"));
+      const replayBtn = document.getElementById("replayBtn");
+
+      function playSequence() {
+        tiles.forEach((tile) => tile.classList.remove("is-visible"));
+        if (prefersReducedMotion) {
+          tiles.forEach((tile) => tile.classList.add("is-visible"));
+          return;
+        }
+        tiles.forEach((tile, index) => {
+          setTimeout(() => {
+            tile.classList.add("is-visible");
+          }, 160 + index * 140);
+        });
+      }
+
+      playSequence();
+      if (replayBtn) {
+        replayBtn.addEventListener("click", playSequence);
+      }
+    })();
+
+    /* THE CREATIVE MIND — Scroll & Mouse Parallax */
+    (function initCreativeMindInteractions() {
+      const section = document.getElementById("about");
+      const stage = document.getElementById("collageStage");
+      const revealItems = document.querySelectorAll("#about [data-reveal]");
+      const layers = document.querySelectorAll("#about .collage-layer");
+
+      if (prefersReducedMotion) {
+        revealItems.forEach((el) => el.classList.add("is-revealed"));
+        return;
+      }
+
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-revealed");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.14 }
+        );
+        revealItems.forEach((el) => observer.observe(el));
+      } else {
+        revealItems.forEach((el) => el.classList.add("is-revealed"));
+      }
+
+      let mouseX = 0;
+      let mouseY = 0;
+      let currentX = 0;
+      let currentY = 0;
+      let scrollOffset = 0;
+      let rafId = null;
+
+      const isMobile = () => window.matchMedia("(max-width: 768px)").matches;
+
+      if (stage) {
+        stage.addEventListener("pointermove", (e) => {
+          if (isMobile()) return;
+          const rect = stage.getBoundingClientRect();
+          mouseX = ((e.clientX - rect.left) / rect.width - 0.5) * 28;
+          mouseY = ((e.clientY - rect.top) / rect.height - 0.5) * 28;
+          scheduleFrame();
+        });
+
+        stage.addEventListener("pointerleave", () => {
+          mouseX = 0;
+          mouseY = 0;
+          scheduleFrame();
+        });
+      }
+
+      function updateScroll() {
+        if (!section) return;
+        const rect = section.getBoundingClientRect();
+        scrollOffset = (window.innerHeight * 0.5 - (rect.top + rect.height * 0.5)) * 0.08;
+        scheduleFrame();
+      }
+
+      function renderLayers() {
+        rafId = null;
+        currentX += (mouseX - currentX) * 0.14;
+        currentY += (mouseY - currentY) * 0.14;
+
+        layers.forEach((layer) => {
+          const parallax = parseFloat(layer.dataset.parallax || "0.2");
+          const scrollSpeed = parseFloat(layer.dataset.scrollSpeed || "0");
+          const tx = isMobile() ? 0 : currentX * parallax;
+          const ty = (isMobile() ? 0 : currentY * parallax) + scrollOffset * scrollSpeed * 10;
+          layer.style.transform = `translate3d(${tx.toFixed(1)}px, ${ty.toFixed(1)}px, 0)`;
+        });
+
+        if (Math.abs(mouseX - currentX) > 0.1 || Math.abs(mouseY - currentY) > 0.1) {
+          scheduleFrame();
+        }
+      }
+
+      function scheduleFrame() {
+        if (!rafId) rafId = requestAnimationFrame(renderLayers);
+      }
+
+      window.addEventListener("scroll", updateScroll, { passive: true });
+      updateScroll();
+    })();
+
+    /* PORTFOLIO: show every listed asset + allow loading the whole folder */
+    (function initPortfolio() {
+      const filterBtns = document.querySelectorAll(".filter-btn");
+      const grid = document.getElementById("projectsGrid");
+      const picker = document.getElementById("mediaPicker");
+      const pickFolderButton = document.getElementById("pickFolderButton");
+      const mediaCount = document.getElementById("mediaCount");
+      if (!grid) return;
+
+      const filesPicker = document.getElementById("mediaFilesPicker");
+      const pickFilesButton = document.getElementById("pickFilesButton");
+
+      // Open the native selectors directly from user clicks.
+      if (pickFolderButton && picker) {
+        pickFolderButton.addEventListener("click", () => picker.click());
+      }
+      if (pickFilesButton && filesPicker) {
+        pickFilesButton.addEventListener("click", () => filesPicker.click());
+      }
+
+      const listedMedia = [
+        { name: "ChatGPT Image Jul 22, 2026, 01_37_36 AM.png", type: "image" },
+        { name: "ChatGPT Image Jul 22, 2026, 01_42_53 AM.png", type: "image" },
+        { name: "elizabeth.png", type: "image" },
+        { name: "lamar.png", type: "image" },
+        { name: "nova.png", type: "image" },
+        { name: "novag.png", type: "image" },
+        { name: "ooo.png", type: "image" },
+        { name: "PLANCO.png", type: "image" },
+        { name: "PLANCO1.png", type: "image" },
+        { name: "teeth.jpg", type: "image" },
+        { name: "Untitled-1.png", type: "image" },
+        { name: "Untitled-2.png", type: "image" },
+        { name: "Untitled-3.png", type: "image" },
+        { name: "Untitled-4.png", type: "image" },
+        { name: "water.png", type: "image" },
+        { name: "WhatsApp Image 2026-10-26 at 12.43.58 PM (1).jpeg", type: "image" },
+        { name: "WhatsApp Image 2026-10-26 at 12.43.58 PM.jpeg", type: "image" },
+        { name: "WhatsApp Image 2026-10-28 at 2.13.40 PM (1).jpeg", type: "image" },
+        { name: "WhatsApp Image 2026-10-28 at 2.13.40 PM.jpeg", type: "image" },
+        { name: "WhatsApp Image 2026-10-31 at 11.59.44 AM (1).jpeg", type: "image" },
+        { name: "WhatsApp Image 2026-10-31 at 11.59.44 AM.jpeg", type: "image" },
+        { name: "WhatsApp Image 2026-11-01 at 2.12.32 PM (1).jpeg", type: "image" },
+        { name: "WhatsApp Image 2026-11-01 at 2.12.32 PM.jpeg", type: "image" },
+        { name: "WhatsApp Image 2026-11-02 at 2.05.32 PM.jpeg", type: "image" },
+        { name: "WhatsApp Image 2026-11-03 at 12.50.48 PM.jpeg", type: "image" },
+        { name: "WhatsApp Image 2026-11-03 at 12.50.50 PM.jpeg", type: "image" },
+        { name: "رحلات.jpg", type: "image" },
+        { name: "WhatsApp Video 2026-11-24 at 11.00.27 AM.mp4", type: "video" },
+        { name: "WhatsApp Video 2026-11-24 at 11.00.35 AM (2).mp4", type: "video" },
+        { name: "WhatsApp Video 2026-11-24 at 11.00.35 AM.mp4", type: "video" },
+        { name: "WhatsApp Video 2026-11-24 at 11.02.08 AM (1).mp4", type: "video" },
+        { name: "WhatsApp Video 2026-11-24 at 11.02.08 AM.mp4", type: "video" },
+        { name: "WhatsApp Video 2026-11-24 at 11.02.09 AM (2).mp4", type: "video" },
+        { name: "WhatsApp Video 2026-11-24 at 11.02.09 AM.mp4", type: "video" }
+      ];
+      let activeFilter = "all";
+      // Keep every imported preview alive and remember files already added.
+      const objectUrls = [];
+      const addedFileKeys = new Set();
+
+      function applyFilter() {
+        grid.querySelectorAll(".project-card").forEach(card => {
+          card.classList.toggle("hidden", !(activeFilter === "all" || card.dataset.category === activeFilter));
+        });
+      }
+
+      filterBtns.forEach(btn => btn.addEventListener("click", () => {
+        filterBtns.forEach(item => item.classList.remove("active"));
+        btn.classList.add("active");
+        activeFilter = btn.dataset.filter || "all";
+        applyFilter();
+      }));
+
+      function makeCard(name, type, src, fileKey = name) {
+        const title = name.replace(/\.[^/.]+$/, "").replace(/[_-]+/g, " ");
+        const article = document.createElement("article");
+        article.className = "project-card";
+        article.dataset.fileKey = String(fileKey).toLowerCase();
+        article.dataset.category = type === "video" ? "video" : "graphic";
+        const media = document.createElement("div");
+        media.className = "project-media";
+        const tag = document.createElement("span");
+        tag.className = "project-tag";
+        tag.textContent = type === "video" ? "Video & Motion" : "Graphic Design";
+        media.appendChild(tag);
+
+        if (type === "image") {
+          media.classList.add("is-clickable");
+          const img = document.createElement("img");
+          img.src = src;
+          img.alt = title;
+          img.loading = "lazy";
+          img.addEventListener("error", () => handleImgFallback(img, name));
+          media.addEventListener("click", () => openLightbox(media));
+          media.appendChild(img);
+        } else {
+          const video = document.createElement("video");
+          video.src = src;
+          video.controls = true;
+          video.preload = "metadata";
+          video.playsInline = true;
+          video.addEventListener("error", () => handleVideoFallback(video, name));
+          media.appendChild(video);
+        }
+
+        const body = document.createElement("div");
+        body.className = "project-body";
+        const heading = document.createElement("h3");
+        heading.textContent = title;
+        const desc = document.createElement("p");
+        desc.textContent = type === "video" ? "Video editing and motion project." : "Graphic design and visual campaign.";
+        body.append(heading, desc);
+        article.append(media, body);
+        return article;
+      }
+
+      function renderListedFiles() {
+        listedMedia.forEach(item => {
+          const key = item.name.toLowerCase();
+          if (addedFileKeys.has(key)) return;
+          addedFileKeys.add(key);
+          grid.appendChild(makeCard(item.name, item.type, encodeURI(item.name), key));
+        });
+        applyFilter();
+        updateMediaCount();
+      }
+
+      function updateMediaCount() {
+        if (!mediaCount) return;
+        const cards = Array.from(grid.querySelectorAll(".project-card"));
+        const images = cards.filter(card => card.dataset.category === "graphic").length;
+        const videos = cards.filter(card => card.dataset.category === "video").length;
+        mediaCount.textContent = `${images} صورة • ${videos} فيديو • ${cards.length} إجمالي الأعمال`;
+      }
+      renderListedFiles();
+
+      // Persist imported media in this browser so it remains after refresh/reopening.
+      const DB_NAME = "habibaPortfolioMedia";
+      const STORE_NAME = "importedMedia";
+
+      function openMediaDB() {
+        return new Promise((resolve, reject) => {
+          if (!("indexedDB" in window)) {
+            reject(new Error("IndexedDB is not supported in this browser."));
+            return;
+          }
+          const request = indexedDB.open(DB_NAME, 1);
+          request.onupgradeneeded = () => {
+            const db = request.result;
+            if (!db.objectStoreNames.contains(STORE_NAME)) {
+              db.createObjectStore(STORE_NAME, { keyPath: "key" });
+            }
+          };
+          request.onsuccess = () => resolve(request.result);
+          request.onerror = () => reject(request.error);
+        });
+      }
+
+      async function saveImportedFile(record) {
+        const db = await openMediaDB();
+        return new Promise((resolve, reject) => {
+          const tx = db.transaction(STORE_NAME, "readwrite");
+          tx.objectStore(STORE_NAME).put(record);
+          tx.oncomplete = () => { db.close(); resolve(); };
+          tx.onerror = () => { db.close(); reject(tx.error); };
+        });
+      }
+
+      async function restoreImportedFiles() {
+        try {
+          const db = await openMediaDB();
+          const records = await new Promise((resolve, reject) => {
+            const tx = db.transaction(STORE_NAME, "readonly");
+            const request = tx.objectStore(STORE_NAME).getAll();
+            request.onsuccess = () => resolve(request.result || []);
+            request.onerror = () => reject(request.error);
+          });
+          db.close();
+
+          records.sort((a, b) => a.key.localeCompare(b.key, undefined, {
+            numeric: true, sensitivity: "base"
+          }));
+
+          records.forEach(record => {
+            if (addedFileKeys.has(record.key)) return;
+            const url = URL.createObjectURL(record.file);
+            objectUrls.push(url);
+            addedFileKeys.add(record.key);
+            grid.appendChild(makeCard(record.name, record.type, url, record.key));
+          });
+
+          applyFilter();
+          updateMediaCount();
+        } catch (error) {
+          console.warn("Could not restore saved portfolio media:", error);
+          if (mediaCount) {
+            mediaCount.textContent += " • لم يتمكن المتصفح من استعادة الملفات المحفوظة";
+          }
+        }
+      }
+
+      restoreImportedFiles();
+
+      function loadSelectedFiles(fileList) {
+        const files = Array.from(fileList || []);
+        if (!files.length) {
+          if (mediaCount) mediaCount.textContent = "لم يتم اختيار ملفات. اختاري الفولدر نفسه أو حددي الملفات من داخله.";
+          return;
+        }
+
+        const supported = files.map(file => {
+          const ext = (file.name.split(".").pop() || "").toLowerCase();
+          const type = file.type.startsWith("video/") || ["mp4", "mov", "webm", "m4v", "ogg"].includes(ext)
+            ? "video"
+            : (file.type.startsWith("image/") || ["jpg", "jpeg", "png", "webp", "gif", "avif", "svg"].includes(ext) ? "image" : null);
+          return { file, type };
+        }).filter(item => item.type);
+
+        // Add to the existing gallery; never clear the original or previously imported works.
+        supported.sort((a, b) => {
+          const pathA = a.file.webkitRelativePath || a.file.name;
+          const pathB = b.file.webkitRelativePath || b.file.name;
+          return pathA.localeCompare(pathB, undefined, { numeric: true, sensitivity: "base" });
+        });
+
+        let addedNow = 0;
+        supported.forEach(({ file, type }) => {
+          // Use relative path when importing a folder; name is the fallback for manual selection.
+          const relativePath = file.webkitRelativePath || file.name;
+          const fileKey = relativePath.toLowerCase();
+          if (addedFileKeys.has(fileKey)) return;
+
+          const url = URL.createObjectURL(file);
+          objectUrls.push(url);
+          addedFileKeys.add(fileKey);
+          grid.appendChild(makeCard(file.name, type, url, fileKey));
+          addedNow++;
+
+          // Save the actual file bytes in IndexedDB (not a temporary blob URL).
+          saveImportedFile({
+            key: fileKey,
+            name: file.name,
+            type,
+            file,
+            savedAt: Date.now()
+          }).catch(error => {
+            console.warn("Could not save imported media:", file.name, error);
+            if (mediaCount) {
+              mediaCount.textContent = "تمت الإضافة للمعرض، لكن تعذر حفظ بعض الملفات في المتصفح.";
+            }
+          });
+        });
+
+        activeFilter = "all";
+        filterBtns.forEach(btn => btn.classList.toggle("active", btn.dataset.filter === "all"));
+        applyFilter();
+        updateMediaCount();
+        if (mediaCount && supported.length) {
+          mediaCount.textContent += addedNow
+            ? ` • تمت إضافة ${addedNow} ملف جديد`
+            : " • الملفات دي مضافة بالفعل";
+        } else if (mediaCount) {
+          mediaCount.textContent = "لم يتم العثور على صور أو فيديوهات مدعومة في الاختيار.";
+        }
+      }
+
+      if (picker) picker.addEventListener("change", event => {
+        loadSelectedFiles(event.target.files);
+        event.target.value = "";
+      });
+      if (filesPicker) filesPicker.addEventListener("change", event => {
+        loadSelectedFiles(event.target.files);
+        event.target.value = "";
+      });
+    })();
+
+    function handleImgFallback(imgEl, filename) {
+      const parent = imgEl.parentElement;
+      if (!parent || parent.querySelector(".media-fallback-box")) return;
+      imgEl.style.display = "none";
+      const box = document.createElement("div");
+      box.className = "media-fallback-box";
+      box.innerHTML = `<strong>Preview Pending</strong><span>Check filename in folder:</span><code>${filename}</code>`;
+      parent.appendChild(box);
+    }
+
+    function handleVideoFallback(videoEl, filename) {
+      const parent = videoEl.parentElement;
+      if (!parent || parent.querySelector(".media-fallback-box")) return;
+      const box = document.createElement("div");
+      box.className = "media-fallback-box";
+      const heading = document.createElement("strong");
+      heading.textContent = "Video Preview Unavailable";
+      const note = document.createElement("span");
+      note.textContent = "Check that this video format is supported by your browser:";
+      const name = document.createElement("code");
+      name.textContent = filename;
+      box.append(heading, note, name);
+      parent.appendChild(box);
+    }
+
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightboxImg");
+    const lightboxClose = document.getElementById("lightboxClose");
+
+    function openLightbox(mediaContainer) {
+      const img = mediaContainer.querySelector("img");
+      if (!img || img.style.display === "none" || !lightbox || !lightboxImg) return;
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt || "Artwork preview";
+      lightbox.classList.add("open");
+    }
+
+    if (lightboxClose && lightbox) {
+      lightboxClose.addEventListener("click", () => lightbox.classList.remove("open"));
+      lightbox.addEventListener("click", (e) => {
+        if (e.target === lightbox) lightbox.classList.remove("open");
+      });
+    }
+
+    (function initContactForm() {
+      const form = document.getElementById("contactForm");
+      const status = document.getElementById("formStatus");
+      if (!form || !status) return;
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        status.textContent = "Message prepared! You can also reach out directly via email or the flipbook link.";
+        form.reset();
+      });
+    })();
+  </script>
+</body>
+</html>
